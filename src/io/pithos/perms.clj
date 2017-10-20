@@ -109,8 +109,8 @@
 (defn header-acl
   [owner tenant headers]
   (let [init          (if (= owner tenant)
-                        {:READ [{:URI "authenticated"}] :FULL_CONTROL [{:ID owner :DisplayName owner}]}
-                        {:READ [{:URI "authenticated"}] :FULL_CONTROL [{:ID owner :DisplayName owner}
+                        {:READ [{:URI "authenticated-users"}] :FULL_CONTROL [{:ID owner :DisplayName owner}]}
+                        {:READ [{:URI "authenticated-users"}] :FULL_CONTROL [{:ID owner :DisplayName owner}
                                         {:ID tenant :DisplayName tenant}]})
         canned-acl    (get headers "x-amz-acl")
         acl-read      (some-> (get headers "x-amz-grant-read")
@@ -141,7 +141,7 @@
          (merge init {:READ [{:URI "anonymous"}]})
 
          "authenticated-read"
-         (merge init {:READ [{:URI "authenticated"}]})
+         (merge init {:READ [{:URI "authenticated-users"}]})
 
          "log-delivery-write" init
 
